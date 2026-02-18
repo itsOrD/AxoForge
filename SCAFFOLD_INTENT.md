@@ -4,15 +4,15 @@
 > All other documentation (tech_stack.md, pipelines, rules) must be hydrated from the decisions made here.
 
 ## 1. Project Objective
-*   **Goal**: [Describe the high-level goal, e.g., "Build a high-performance verified email service"]
-*   **Target Audience**: [Who is this for?]
-*   **Key Value Proposition**: [Why does this exist?]
+*   **Goal**: {{PROJECT_GOAL}}
+*   **Target Audience**: {{TARGET_AUDIENCE}}
+*   **Key Value Proposition**: {{VALUE_PROPOSITION}}
 
 ## 2. Technology Stack (The "What")
-*   **Language**: [e.g., Python 3.12, TypeScript 5.4, Go 1.22]
-*   **Framework**: [e.g., FastAPI, Next.js, Gin]
-*   **Database**: [e.g., PostgreSQL, MongoDB, Redis]
-*   **Infrastructure**: [e.g., Docker, Kubernetes, AWS Lambda]
+*   **Language**: {{TECH_STACK_LANGUAGE}}
+*   **Framework**: {{TECH_STACK_FRAMEWORK}}
+*   **Database**: {{TECH_STACK_DATABASE}}
+*   **Infrastructure**: {{TECH_STACK_INFRA}}
 
 ## 3. Architecture Style (The "How")
 *   **Pattern**: [e.g., Modular Monolith, Microservices, Event-Driven]
