@@ -1,7 +1,5 @@
-# 🦎 AxoForge
+#  AxoForge &nbsp; 🔥⚙️
 **The AI-Native Project Foundation**
-
-![AxoForge Logo](docs/assets/logo.png)
 
 ![Status](https://img.shields.io/badge/Status-Beta-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
@@ -9,6 +7,8 @@
 
 > **Philosophy**: A universal, language-agnostic scaffold designed for **Human-AI Collaboration**.
 > AxoForge doesn't make decisions for you—it helps you and your AI agent make them *together*.
+
+![Cinder-the-Smith](docs/assets/Cinder.png)
 
 ---
 
