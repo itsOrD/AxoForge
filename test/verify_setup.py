@@ -9,7 +9,9 @@ def verify():
     temp_dir = tempfile.mkdtemp()
     print(f"Testing in: {temp_dir}")
     
-    source_root = os.getcwd()
+    # Resolve project root (assuming this script is in <root>/test/)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    source_root = os.path.abspath(os.path.join(current_dir, '..'))
     
     try:
         # 2. Copy relevant files
