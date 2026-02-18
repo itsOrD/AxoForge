@@ -136,6 +136,54 @@ def generate_mcp_config(values, project_root):
     except Exception as e:
         print(f"Error generating mcp.json: {e}")
 
+def reset_git_repo(project_root):
+    """Re-initialize the git repository."""
+    print("\n--- Git Initialization ---")
+    confirm = input("Do you want to reset the git repository? (deletes .git and runs git init) (y/n): ").strip().lower()
+    if confirm == 'y':
+        try:
+            git_dir = os.path.join(project_root, '.git')
+            if os.path.exists(git_dir):
+                import shutil
+                shutil.rmtree(git_dir)
+                print(f"Removed {git_dir}")
+            
+            os.system(f"cd {project_root} && git init")
+            print("Initialized new git repository.")
+        except Exception as e:
+            print(f"Error resetting git repo: {e}")
+    else:
+        print("Skipping git reset.")
+
+def setup_readme(values, project_root):
+    """Replace README.md with the project specific template."""
+    print("\n--- README Setup ---")
+    confirm = input("Do you want to overwrite README.md with a fresh project starter? (y/n): ").strip().lower()
+    if confirm == 'y':
+        template_path = os.path.join(project_root, '.context', 'templates', 'README.md.template')
+        readme_path = os.path.join(project_root, 'README.md')
+        
+        if not os.path.exists(template_path):
+             print(f"Warning: {template_path} not found. Skipping README update.")
+             return
+
+        try:
+            with open(template_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Replace placeholders in the template first
+            new_content = content
+            for p, v in values.items():
+                new_content = new_content.replace(p, v)
+            
+            with open(readme_path, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            print("Updated README.md with project details.")
+        except Exception as e:
+            print(f"Error updating README.md: {e}")
+    else:
+        print("Skipping README update.")
+
 def main():
     print("Initializing AI Native Repo Setup...")
     
@@ -169,6 +217,10 @@ def main():
 
     replace_in_files(matches_in_files, values)
     generate_mcp_config(values, project_root)
+    
+    # Optional Steps
+    reset_git_repo(project_root)
+    setup_readme(values, project_root)
     
     print("\nSetup Complete! 🚀")
 
