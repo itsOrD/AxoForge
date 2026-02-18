@@ -1,0 +1,29 @@
+# Version Control
+.git
+.gitignore
+
+# Dependencies
+node_modules
+vendor
+.venv
+__pycache__
+
+# Build Artifacts
+dist
+build
+out
+target
+bin
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+
+# IDEs
+.idea
+.vscode
+.cursor
+*.swp

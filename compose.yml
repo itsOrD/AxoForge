@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "{{PORT}}:{{PORT}}"
+    environment:
+      - DB_URL={{DB_CONNECTION_STRING}}
+    depends_on:
+      - db
+
+  # Database Service (Hydrate based on intent)
+  db:
+    image: {{DATABASE_IMAGE}}
+    ports:
+      - "{{DB_PORT}}:{{DB_PORT}}"
+    volumes:
+      - db_data:/var/lib/{{DB_DATA_PATH}}
+
+volumes:
+  db_data:
