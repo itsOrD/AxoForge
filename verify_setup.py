@@ -13,15 +13,30 @@ def verify():
     
     try:
         # 2. Copy relevant files
-        shutil.copy(os.path.join(source_root, 'setup.py'), temp_dir)
-        shutil.copy(os.path.join(source_root, 'mcp.json.template'), temp_dir)
+        # setup.py is now in .context/scripts/
+        # mcp.json.template is in .context/templates/
+        
+        # We need to preserve the structure in temp_dir for setup.py to basic logic to work if we run it from scripts dir
+        # BUT setup.py logic basically finds root by looking up.
+        
+        # Let's replicate the structure in temp_dir
+        os.makedirs(os.path.join(temp_dir, '.context', 'scripts'))
+        os.makedirs(os.path.join(temp_dir, '.context', 'templates'))
+        
+        shutil.copy(os.path.join(source_root, '.context', 'scripts', 'setup.py'), os.path.join(temp_dir, '.context', 'scripts'))
+        shutil.copy(os.path.join(source_root, '.context', 'templates', 'mcp.json.template'), os.path.join(temp_dir, '.context', 'templates'))
         shutil.copy(os.path.join(source_root, 'SCAFFOLD_INTENT.md'), temp_dir)
         
         # Copy complex dirs
         if os.path.exists(os.path.join(source_root, 'docs')):
             shutil.copytree(os.path.join(source_root, 'docs'), os.path.join(temp_dir, 'docs'))
-        if os.path.exists(os.path.join(source_root, '.context')):
-            shutil.copytree(os.path.join(source_root, '.context'), os.path.join(temp_dir, '.context'))
+        # We already created .context, so we need to merge or copy leftovers?
+        # Simpler: copy the whole .context from source, then overwrite the ones we might have modified (none yet)
+        # Actually easiest is to just copytree .context to temp_dir/.context
+        # But we already made dirs.
+        # Let's remove the dirs we made and valid copytree
+        shutil.rmtree(os.path.join(temp_dir, '.context'))
+        shutil.copytree(os.path.join(source_root, '.context'), os.path.join(temp_dir, '.context'))
 
         # 3. Simulate User Input
         # Strategy: Just provide "y" for EVERYTHING.
@@ -33,8 +48,15 @@ def verify():
         input_str = "\n".join(inputs) + "\n"
         
         # 4. Run setup.py
+        # We run it from the root, calling the script in .context/scripts/setup.py
+        # OR we run it from .context/scripts/?
+        # The walkthrough says "python3 .context/scripts/setup.py" likely.
+        # Let's try running it as if the user ran: python3 .context/scripts/setup.py
+        
+        setup_script_path = os.path.join(temp_dir, '.context', 'scripts', 'setup.py')
+        
         result = subprocess.run(
-            [sys.executable, 'setup.py'],
+            [sys.executable, setup_script_path],
             cwd=temp_dir,
             input=input_str,
             text=True,
